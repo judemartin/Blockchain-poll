@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import ApexCharts from 'apexcharts';
 @Component({
@@ -6,24 +6,21 @@ import ApexCharts from 'apexcharts';
   templateUrl: './poll-vote.component.html',
   styleUrls: ['./poll-vote.component.scss'],
 })
-export class PollVoteComponent implements OnInit {
-  @Input() options: string[];
-  @Input() results: number[];
-  @Input() voted: boolean;
-  @Input() question: string;
+export class PollVoteComponent implements AfterViewInit {
+  @Input() options: string[] = [];
+  @Input() results: number[] = [];
+  @Input() voted: boolean = false;
+  @Input() question: string = '';
   voteForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.options = [];
-    this.results = [];
-    this.question = '';
     this.voteForm = this.fb.group({
       selected: this.fb.control('', [Validators.required]),
     });
-    this.voted = false;
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit() {
+    console.log(this.voted);
     if (this.voted) {
       this.generateChart();
     }
@@ -32,6 +29,7 @@ export class PollVoteComponent implements OnInit {
     console.log(this.voteForm.value);
   }
   generateChart() {
+    console.log(this.results);
     const options: ApexCharts.ApexOptions = {
       series: [
         {

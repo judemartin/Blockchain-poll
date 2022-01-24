@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { Poll } from './types';
 
 @Component({
   selector: 'app-root',
@@ -7,20 +9,32 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   showForm = false;
-  polls = [
+  activePoll: Poll = null as unknown as Poll;
+  polls: Poll[] = [
     {
+      id: 1,
       question: 'Do you like dogs of cats?',
-      pollImage:
+      thumbnail:
         'https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg',
-      votes: [0, 5, 7],
+      results: [0, 5, 7],
+      options: ['Cats', 'Dogs', 'None'],
       voted: true,
     },
     {
-      question: 'Best month for summer holidays>',
-      pollImage:
+      id: 2,
+      question: 'Best month for summer holidays?',
+      thumbnail:
         'https://images.pexels.com/photos/1118448/pexels-photo-1118448.jpeg',
-      votes: [1, 6, 4],
+      results: [1, 6, 4],
+      options: ['June', 'July', 'August'],
       voted: false,
     },
   ];
+  setActivePoll(poll: Poll) {
+    this.activePoll = null as unknown as Poll;
+    setTimeout(() => {
+      this.activePoll = poll;
+    }, 100);
+    console.log(this.activePoll);
+  }
 }

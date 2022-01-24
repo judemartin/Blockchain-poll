@@ -2,8 +2,9 @@ export interface Poll {
   id: number;
   question: string;
   results: number[];
-  options: number[];
+  options: string[];
   thumbnail: string;
+  voted: boolean;
 }
 
 export interface Voter {
