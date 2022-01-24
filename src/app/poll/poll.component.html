@@ -1,0 +1,25 @@
+<!-- <div class="card mb-4">
+  <div class="poll-image">
+    <img src="https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg" />
+  </div>
+  <div class="card-body">
+    <p class="card-text text-truncate font-weight-bold">
+      Do you like more cats or dogs?
+    </p>
+    <div class="justify-content-between">
+      <small class="text-muted">10 votes</small>
+      <small class="text-muted"> votes</small>
+    </div>
+  </div>
+</div> -->
+<div class="card" style="width: 18rem">
+  <img class="card-img-top" [src]="pollImage" alt="Card image cap" />
+  <div class="card-body">
+    <h5 class="card-title"></h5>
+    <p class="card-text font-weight-bold">{{ question }}</p>
+    <div class="d-flex justify-content-between">
+      <small class="text-muted">{{ numberOfVotes }} votes </small>
+      <small *ngIf="voted" class="badge bg-success">voted </small>
+    </div>
+  </div>
+</div>
