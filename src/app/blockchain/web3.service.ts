@@ -11,7 +11,6 @@ export class Web3Service {
   private web3: Web3 = null as unknown as Web3;
   private contract: Contract = null as unknown as Contract;
   private contractAddress = '0x77c935D5Dc493601294705E1c254599ff240eB80';
-  //0x4cA6ea7716E31692BB0c1Fce3b4F32B5e54bFC68
   constructor() {
     if (window.web3) {
       this.web3 = new Web3(window.ethereum);
@@ -34,6 +33,11 @@ export class Web3Service {
   async executeTx(fnName: string, ...args: any[]): Promise<void> {
     const acc = await this.getAccount();
     this.contract.methods[fnName](...args).send({ from: acc });
+  }
+
+  async call(fnName: string, ...args: any[]): Promise<void> {
+    const acc = await this.getAccount();
+    this.contract.methods[fnName](...args).call({ from: acc });
   }
   //exexuteTx("vote", pollId, vote)
   //exexuteTx("createPoll", question , thumg, opt)
