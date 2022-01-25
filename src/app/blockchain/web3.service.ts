@@ -4,13 +4,14 @@ import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 declare var window: any;
 const contractAbi = require('./contractABI.json');
+import { environment } from './config';
 @Injectable({
   providedIn: 'root',
 })
 export class Web3Service {
   private web3: Web3 = null as unknown as Web3;
   private contract: Contract = null as unknown as Contract;
-  private contractAddress = '0x8EE5d1C90B484F6a6909E0422F998e40EF85d6AC';
+  private contractAddress = environment.contractAddress;
   constructor(private zone: NgZone) {
     if (window.web3) {
       this.web3 = new Web3(window.ethereum);
