@@ -72,4 +72,8 @@ export class PollService {
     console.log({ normalizedPolls });
     return normalizedPolls;
   }
+
+  onEvent(name: string) {
+    return this.web3.onEvents(name);
+  }
 }

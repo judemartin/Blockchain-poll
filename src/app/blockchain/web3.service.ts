@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
+import { Observable } from 'rxjs';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 declare var window: any;
@@ -10,7 +11,7 @@ export class Web3Service {
   private web3: Web3 = null as unknown as Web3;
   private contract: Contract = null as unknown as Contract;
   private contractAddress = '0x8EE5d1C90B484F6a6909E0422F998e40EF85d6AC';
-  constructor() {
+  constructor(private zone: NgZone) {
     if (window.web3) {
       this.web3 = new Web3(window.ethereum);
       this.contract = new this.web3.eth.Contract(
@@ -38,6 +39,17 @@ export class Web3Service {
     const acc = await this.getAccount();
     return this.contract.methods[fnName](...args).call({ from: acc });
   }
-  //exexuteTx("vote", pollId, vote)
-  //exexuteTx("createPoll", question , thumg, opt)
+
+  onEvents(event: string) {
+    return new Observable((observer) => {
+      this.contract.events[event]().on('data', (data: any) => {
+        this.zone.run(() => {
+          observer.next({
+            event: data.event,
+            payload: data.returnValues,
+          });
+        });
+      });
+    });
+  }
 }

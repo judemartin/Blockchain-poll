@@ -13,6 +13,12 @@ export class AppComponent {
   showForm = false;
   activePoll: Poll = null as unknown as Poll;
   polls = this.ps.getPolls();
+  ngOnInit() {
+    this.ps.onEvent('PollCreated').subscribe(() => {
+      this.polls = this.ps.getPolls();
+      this.showForm = false;
+    });
+  }
 
   constructor(private ps: PollService) {}
   setActivePoll(poll: Poll) {
