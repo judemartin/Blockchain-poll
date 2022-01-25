@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 declare var window: any;
@@ -10,7 +9,7 @@ const contractAbi = require('./contractABI.json');
 export class Web3Service {
   private web3: Web3 = null as unknown as Web3;
   private contract: Contract = null as unknown as Contract;
-  private contractAddress = '0x77c935D5Dc493601294705E1c254599ff240eB80';
+  private contractAddress = '0x8EE5d1C90B484F6a6909E0422F998e40EF85d6AC';
   constructor() {
     if (window.web3) {
       this.web3 = new Web3(window.ethereum);
@@ -35,9 +34,9 @@ export class Web3Service {
     this.contract.methods[fnName](...args).send({ from: acc });
   }
 
-  async call(fnName: string, ...args: any[]): Promise<void> {
+  async call(fnName: string, ...args: any[]): Promise<any> {
     const acc = await this.getAccount();
-    this.contract.methods[fnName](...args).call({ from: acc });
+    return this.contract.methods[fnName](...args).call({ from: acc });
   }
   //exexuteTx("vote", pollId, vote)
   //exexuteTx("createPoll", question , thumg, opt)
