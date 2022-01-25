@@ -60,7 +60,10 @@ export class PollService {
     const normalizedPolls: Poll = {
       id: pollRaw[0],
       question: pollRaw[1],
-      thumbnail: pollRaw[2],
+      thumbnail:
+        pollRaw[2].length < 10
+          ? 'https://images.pexels.com/photos/7953209/pexels-photo-7953209.jpeg'
+          : pollRaw[2],
       results: pollRaw[3].map((vote: any) => parseInt(vote)),
       options: pollRaw[4].map((opt: any) =>
         toAscii(opt).replace(/\u0000/g, '')
